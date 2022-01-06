@@ -8,11 +8,50 @@ description: |
   focusing on the CPU, Memomy and Kernel categories.
 
 grade: devel # must be 'stable' to release into candidate/stable channels
-confinement: strict
+confinement: devmode
+
+apps:
+  phoronix-snap:
+    command: bin/phoronix-test-suite
+    #environment:
+    #  LD_LIBRARY_PATH: $SNAP/usr/share/phoronix-test-suite/
+
+passthrough:
+  layout:
+    $SNAP/usr/bin/php:
+      symlink: $SNAP/usr/bin/php7.4
 
 parts:
-  phoronix:
-    # See 'snapcraft plugins'
-    plugin:
-      - home
-      - network
+  phoronix-snap:
+    source: . 
+    plugin: dump
+    build-packages:
+      - php
+      - php-cli
+      - php-xml
+    stage-packages:
+      - python
+      - python-pexpect
+      - php
+      - php-cli
+      - php-xml
+      - libgd3
+      - libxpm4
+      - libfontconfig1
+      - libfreetype6
+      - libtiff5
+      - psmisc
+      - libjbig0
+      - ttf-bitstream-vera
+      - fonts-freefont-ttf
+      - gsfonts-x11
+      - xfonts-utils
+      - libfontenc1
+      - iptables
+    override-build: |
+      snapcraftctl build
+      DESTDIR=/usr
+      cd phoronix-test-suite
+      ./install-sh
+      mkdir -p $SNAPCRAFT_PART_INSTALL/bin
+      cp /usr/bin/phoronix-test-suite $SNAPCRAFT_PART_INSTALL/bin/phoronix-test-suite
