@@ -16,7 +16,6 @@ apps:
       PATH: $SNAP/usr/bin:$PATH
       LD_LIBRARY_PATH: $SNAP/usr/share:$SNAP/usr/share:$SNAP/usr/doc:$SNAP/usr/lib
     command: bin/phoronix-test-suite
-      #$SNAP/usr/bin/php7.4 /usr/share/phoronix-test-suite/pts-core/phoronix-test-suite.php
 
 #passthrough:
 layout:
@@ -26,10 +25,6 @@ layout:
   #  symlink: $SNAP/usr/bin/phoronix-test-suite
   # $SNAP/usr/share/phoronix-test-suite:
   #  symlink: $SNAP/usr/share/phoronix-test-suite
-      #/usr/bin/phoronix-test-suite:
-      #symlink: $SNAP/bin/phoronix-test-suite
-      # /usr/share/phoronix-test-suite:
-      #symlink: $SNAP/bin/share/phoronix-test-suite
 
 parts:
   phoronix-snap:
@@ -68,14 +63,9 @@ parts:
       - iptables
     override-build: |
       snapcraftctl build
-      #dpkg -i phoronix-test-suite_10.8.0_all.deb
       #mkdir -p $SNAPCRAFT_PART_INSTALL/phoronix-test-suite
       #ls $SNAPCRAFT_PART_INSTALL
       cd phoronix-test-suite
-      #cd $SNAPCRAFT_PART_INSTALL/phoronix-test-suite
-      #DESTDIR=$SNAPCRAFT_PART_INSTALL
       ./install-sh $SNAPCRAFT_PART_INSTALL
-      #mkdir -p $SNAPCRAFT_PART_INSTALL/bin
-      #cp /usr/bin/phoronix-test-suite $SNAPCRAFT_PART_INSTALL/bin/phoronix-test-suite
       #cp -r /usr/share/phoronix-test-suite $SNAPCRAFT_PART_INSTALL/share
       which phoronix-test-suite

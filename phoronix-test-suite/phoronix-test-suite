@@ -283,8 +283,8 @@ fi
 exit
 fi
 
-echo "\n--->"
-ls
+# echo "\n--->"
+# ls
 
 if [ ! -f pts-core/phoronix-test-suite.php ] && [ -f `dirname $0`/pts-core/phoronix-test-suite.php ]
 then
