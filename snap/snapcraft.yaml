@@ -12,29 +12,47 @@ confinement: devmode
 
 apps:
   phoronix-snap:
+    environment:
+      PATH: $SNAP/usr/bin:$PATH
+      LD_LIBRARY_PATH: $SNAP/usr/share:$SNAP/usr/share:$SNAP/usr/doc:$SNAP/usr/lib
     command: bin/phoronix-test-suite
-    #environment:
-    #  LD_LIBRARY_PATH: $SNAP/usr/share/phoronix-test-suite/
+      #$SNAP/usr/bin/php7.4 /usr/share/phoronix-test-suite/pts-core/phoronix-test-suite.php
 
-passthrough:
-  layout:
-    $SNAP/usr/bin/php:
-      symlink: $SNAP/usr/bin/php7.4
+#passthrough:
+layout:
+  $SNAP/usr/bin/php:
+    symlink: $SNAP/usr/bin/php7.4
+  # $SNAP/usr/bin/phoronix-test-suite:
+  #  symlink: $SNAP/usr/bin/phoronix-test-suite
+  # $SNAP/usr/share/phoronix-test-suite:
+  #  symlink: $SNAP/usr/share/phoronix-test-suite
+      #/usr/bin/phoronix-test-suite:
+      #symlink: $SNAP/bin/phoronix-test-suite
+      # /usr/share/phoronix-test-suite:
+      #symlink: $SNAP/bin/share/phoronix-test-suite
 
 parts:
   phoronix-snap:
-    source: . 
+    source: .
     plugin: dump
     build-packages:
-      - php
-      - php-cli
-      - php-xml
+      - php7.4
+      - php7.4-cli
+      - php7.4-xml
     stage-packages:
       - python
       - python-pexpect
-      - php
-      - php-cli
-      - php-xml
+      - php7.4
+      - php7.4-cli
+      - php7.4-xml
+      - php7.4-json
+      - php7.4-common
+      - php7.4-curl
+      - php7.4-mbstring
+      - php7.4-mysql
+      - php7.4-bcmath
+      - php7.4-zip
+      - openssl
       - libgd3
       - libxpm4
       - libfontconfig1
@@ -50,8 +68,14 @@ parts:
       - iptables
     override-build: |
       snapcraftctl build
-      DESTDIR=/usr
+      #dpkg -i phoronix-test-suite_10.8.0_all.deb
+      #mkdir -p $SNAPCRAFT_PART_INSTALL/phoronix-test-suite
+      #ls $SNAPCRAFT_PART_INSTALL
       cd phoronix-test-suite
-      ./install-sh
-      mkdir -p $SNAPCRAFT_PART_INSTALL/bin
-      cp /usr/bin/phoronix-test-suite $SNAPCRAFT_PART_INSTALL/bin/phoronix-test-suite
+      #cd $SNAPCRAFT_PART_INSTALL/phoronix-test-suite
+      #DESTDIR=$SNAPCRAFT_PART_INSTALL
+      ./install-sh $SNAPCRAFT_PART_INSTALL
+      #mkdir -p $SNAPCRAFT_PART_INSTALL/bin
+      #cp /usr/bin/phoronix-test-suite $SNAPCRAFT_PART_INSTALL/bin/phoronix-test-suite
+      #cp -r /usr/share/phoronix-test-suite $SNAPCRAFT_PART_INSTALL/share
+      which phoronix-test-suite

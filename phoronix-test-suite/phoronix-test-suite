@@ -35,7 +35,7 @@ then
 else
 	export PTS_DIR=$(readlink -f `dirname $0`)
 fi
-#export PTS_DIR=`pwd`
+export PTS_DIR=`pwd`
 
 export PTS_MODE="CLIENT"
 if which realpath >/dev/null 2>&1 ;
@@ -45,10 +45,12 @@ else
 	export PTS_LAUNCHER="$PTS_DIR/phoronix-test-suite"
 fi
 
-if [ $PTS_DIR != "`pwd`" ]
-then
-	cd $PTS_DIR
-fi
+
+# if [ $PTS_DIR != "`pwd`" ]
+#then
+#	cd $PTS_DIR
+#fi
+#echo $PTS_DIR
 
 # Run any start-up hooks, such as to pre-seed environment variables or other non-default behaviors / customizations
 if [ -d pts-core/hooks/startup ]
@@ -281,12 +283,15 @@ fi
 exit
 fi
 
+echo "\n--->"
+ls
+
 if [ ! -f pts-core/phoronix-test-suite.php ] && [ -f `dirname $0`/pts-core/phoronix-test-suite.php ]
 then
 	cd `dirname $0`
 fi
 
-# Ensure the user is in the correct directory
+
 if [ ! -f pts-core/phoronix-test-suite.php ]
 then
 	cat <<'EOT'
