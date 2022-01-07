@@ -13,14 +13,23 @@ confinement: devmode
 apps:
   phoronix-snap:
     environment:
-      PATH: $SNAP/usr/bin:$PATH
-      LD_LIBRARY_PATH: $SNAP/usr/share:$SNAP/usr/share:$SNAP/usr/doc:$SNAP/usr/lib
+      PATH: /usr/bin:$SNAP/usr/bin/:$PATH
+      LD_LIBRARY_PATH: /usr/share:$SNAP/usr/share:$SNAP/prime/usr/share:$SNAP/usr/doc:$SNAP/usr/lib
     command: bin/phoronix-test-suite
 
 #passthrough:
 layout:
   $SNAP/usr/bin/php:
     symlink: $SNAP/usr/bin/php7.4
+  $SNAP/usr/bin/php-cli:
+    symlink: $SNAP/usr/bin/php7.4-cli
+  $SNAP/usr/bin/php-json:
+    symlink: $SNAP/usr/bin/php7.4-json
+  $SNAP/usr/bin/php-xml:
+    symlink: $SNAP/usr/bin/php7.4-xml
+
+      #  $SNAP/usr/bin/php7.4-xml:
+#    symlink: $SNAP/usr
   # $SNAP/usr/bin/phoronix-test-suite:
   #  symlink: $SNAP/usr/bin/phoronix-test-suite
   # $SNAP/usr/share/phoronix-test-suite:
@@ -35,32 +44,32 @@ parts:
       - php7.4-cli
       - php7.4-xml
     stage-packages:
-      - python
-      - python-pexpect
-      - php7.4
+      #- python
+      #- python-pexpect
+      #ls- php7.4
       - php7.4-cli
       - php7.4-xml
       - php7.4-json
       - php7.4-common
-      - php7.4-curl
-      - php7.4-mbstring
-      - php7.4-mysql
-      - php7.4-bcmath
-      - php7.4-zip
-      - openssl
-      - libgd3
-      - libxpm4
-      - libfontconfig1
-      - libfreetype6
-      - libtiff5
-      - psmisc
-      - libjbig0
-      - ttf-bitstream-vera
-      - fonts-freefont-ttf
-      - gsfonts-x11
-      - xfonts-utils
-      - libfontenc1
-      - iptables
+        #- php7.4-curl
+        #- php7.4-mbstring
+        #- php7.4-mysql
+        #- php7.4-bcmath
+        #- php7.4-zip
+        #- openssl
+        #- libgd3
+        #- libxpm4
+        #- libfontconfig1
+        #- libfreetype6
+        #- libtiff5
+        #- psmisc
+        #- libjbig0
+        #- ttf-bitstream-vera
+        #- fonts-freefont-ttf
+        #- gsfonts-x11
+        #- xfonts-utils
+        #- libfontenc1
+        #- iptables
     override-build: |
       snapcraftctl build
       #mkdir -p $SNAPCRAFT_PART_INSTALL/phoronix-test-suite
