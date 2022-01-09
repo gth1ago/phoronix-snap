@@ -1,13 +1,14 @@
-name: phoronix-teste
+name: phoronix-snap
 version: '0.1'
-summary: teste-phoronix
+summary: Phoronix-test-suit tools analys
 description: |
- Teste para phoronix com PHP personlizado ja pronto
- extensões futuras.
+  Snap to use the well-known analysis tool phoronix-test-suite. For
+  the supported tests, it will remain in the selections in the future,
+  focusing on the CPU, Memomy and Kernel categories.
 
 grade: devel
 confinement: devmode
-base: core18
+base: core18        # extencao por enquanto n funciona no core20
 
 architectures:
   - build-on: amd64
@@ -15,7 +16,7 @@ architectures:
   - build-on: arm64
 
 apps:
-  phoronix-teste:
+  phoronix-snap:
     environment:
       PYTHONPATH: $SNAP/usr/lib/python3/dist-packages
     #PATH: /usr/bin:$SNAP/usr/bin/:$PATH
@@ -151,11 +152,10 @@ parts:
    stage-packages: [curl]
 
 
-  phoronix-teste:
+  phoronix-snap:
     source: .
     plugin: python
     python-version: python3
-    # - php-xml
     build-packages:
       - build-essential
       - gcc
@@ -176,16 +176,10 @@ parts:
       - apt-file
       - libxi6
       - libxi-dev
-    #python-packages:
-    #  - pip==20.3.4
-    #build-environment:
-    #  - PYTHONPATH: $SNAPCRAFT_PART_INSTALL/usr/lib/python3/dist-packages:$PYTHONPATH
     override-build: |
       snapcraftctl build
       cd phoronix-test-suite
       ./install-sh $SNAPCRAFT_PART_INSTALL
-      #cp -r /usr/share/phoronix-test-suite $SNAPCRAFT_PART_INSTALL/share
-      which phoronix-test-suite
-      phoronix-test-suite install-dependencies cachebench
+      which phoronix-test-suite                                 # visu
+      phoronix-test-suite install-dependencies cachebench       # test
       phoronix-test-suite install cachebench
-
